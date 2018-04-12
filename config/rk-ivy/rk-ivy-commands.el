@@ -42,7 +42,7 @@
 
 (defun rk--region-or-symbol ()
   "Get text or symbol at point, or an empty string if neither exist."
-  (if-let* ((text (rk--region-or-symbol-at-pt)))
+  (-if-let* ((text (rk--region-or-symbol-at-pt)))
       text
     ""))
 
