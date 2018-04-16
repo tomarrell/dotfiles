@@ -239,50 +239,50 @@
       "fo" #'rk-flow-toggle-sealed-object
       "fd" #'flow-minor-jump-to-definition)))
 
-(use-package prettier-js
-  :after rk-web-modes
-  :commands (prettier-js-mode
-             prettier-js)
-  :preface
-  (progn
-    (autoload 'f-exists? "f")
-    (autoload 'json-read-file "json")
-    (defun rk-web--prettier-enable-p ()
-      "Enable prettier if no .prettierdisable is found in project root."
-      (-when-let (root (projectile-project-p))
-        (not (f-exists? (f-join root ".prettierdisable")))))
+;; (use-package prettier-js
+;;   :after rk-web-modes
+;;   :commands (prettier-js-mode
+;;              prettier-js)
+;;   :preface
+;;   (progn
+;;     (autoload 'f-exists? "f")
+;;     (autoload 'json-read-file "json")
+;;     (defun rk-web--prettier-enable-p ()
+;;       "Enable prettier if no .prettierdisable is found in project root."
+;;       (-when-let (root (projectile-project-p))
+;;         (not (f-exists? (f-join root ".prettierdisable")))))
 
-    (defun rk-web--setup-prettier-local-binary-and-config ()
-      "Set up prettier config & binary for file if applicable."
-      (-if-let* ((root (projectile-project-p))
-                 (prettier-bin (f-join root "node_modules/.bin/prettier"))
-                 (prettier-bin-p (f-exists? prettier-bin))
-                 (prettier-config (s-trim (shell-command-to-string
-                                           (s-join " " (list prettier-bin "--find-config-path" (buffer-file-name)))))))
-          (progn
-            (setq-local prettier-js-command prettier-bin)
-            (setq-local prettier-js-args (list "--config" prettier-config)))
-        (setq-local prettier-js-args rk-web--prettier-default-args)))
+;;     (defun rk-web--setup-prettier-local-binary-and-config ()
+;;       "Set up prettier config & binary for file if applicable."
+;;       (-if-let* ((root (projectile-project-p))
+;;                  (prettier-bin (f-join root "node_modules/.bin/prettier"))
+;;                  (prettier-bin-p (f-exists? prettier-bin))
+;;                  (prettier-config (s-trim (shell-command-to-string
+;;                                            (s-join " " (list prettier-bin "--find-config-path" (buffer-file-name)))))))
+;;           (progn
+;;             (setq-local prettier-js-command prettier-bin)
+;;             (setq-local prettier-js-args (list "--config" prettier-config)))
+;;         (setq-local prettier-js-args rk-web--prettier-default-args)))
 
-    (defun rk-web--setup-prettier ()
-      (when (rk-web--prettier-enable-p)
-        (progn
-          (rk-web--setup-prettier-local-binary-and-config)
-          (prettier-js-mode +1))))
+;;     (defun rk-web--setup-prettier ()
+;;       (when (rk-web--prettier-enable-p)
+;;         (progn
+;;           (rk-web--setup-prettier-local-binary-and-config)
+;;           (prettier-js-mode +1))))
 
-    (defun rk-web--enable-prettier-on-find-file ()
-      (when (and (derived-mode-p 'web-mode)
-                 (-contains-p '("javascript" "jsx") web-mode-content-type))
-        (rk-web--setup-prettier))))
+;;     (defun rk-web--enable-prettier-on-find-file ()
+;;       (when (and (derived-mode-p 'web-mode)
+;;                  (-contains-p '("javascript" "jsx") web-mode-content-type))
+;;         (rk-web--setup-prettier))))
 
-  :config
-  (progn
-    (add-hook 'find-file-hook #'rk-web--enable-prettier-on-find-file))
+;;   :config
+;;   (progn
+;;     (add-hook 'find-file-hook #'rk-web--enable-prettier-on-find-file))
 
-  :init
-  (progn
-    (spacemacs-keys-set-leader-keys-for-major-mode 'rk-web-js-mode
-      "." #'prettier-js)))
+;;   :init
+;;   (progn
+;;     (spacemacs-keys-set-leader-keys-for-major-mode 'rk-web-js-mode
+;;       "." #'prettier-js)))
 
 (use-package tern
   :defer t
