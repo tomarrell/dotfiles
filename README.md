@@ -1,3 +1,6 @@
+# Credit
+Forked from [Raghu's](https://github.com/d4ncer/.emacs.d) repository. Most of the configuration is his, I have simply added useful things for my own personal workflow. All credit goes to him.
+
 # My .emacs setup
 
 ![web-mode-trifecta](https://raw.githubusercontent.com/d4ncer/.emacs.d/master/screenshots/web-mode-trifecta.png "JS + CSS + MD")
